@@ -143,7 +143,7 @@
       font-size: 1.2rem;
     }
 
-    /* 모달 스타일 (기존 이미지 모달) */
+    /* 기존 이미지 모달 스타일 */
     .modal {
       position: fixed;
       top: 0;
@@ -221,101 +221,58 @@
       border-radius: 50%;
       font-size: 2rem;
       cursor: pointer;
-      display: none; /* 스크롤 시 나타나도록 JS에서 제어 */
+      display: none; /* 스크롤 시 JS로 제어 */
       align-items: center;
       justify-content: center;
       z-index: 300;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
-/* 편지 모달 및 편지 내용 수정 (CSS) */
-.letter-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  z-index: 400;
-  padding: 2rem;
-}
+    /* 편지 모달 및 편지 내용 */
+    .letter-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 400;
+      padding: 2rem;
+    }
 
-.letter-modal.active {
-  opacity: 1;
-  visibility: visible;
-}
+    .letter-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-.letter-content {
-  position: relative;
-  width: 90%;
-  max-width: 800px;
-  height: 80%;
-  overflow: hidden;
-  background: #222;
-  padding: 2rem;
-  border-radius: 10px;
-  color: var(--text);
-  font-size: 1.2rem;
-  line-height: 1.6;
-}
+    .letter-content {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      height: 80%;
+      overflow: hidden;
+      background: #222;
+      padding: 2rem;
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
 
-/* 초기 상태에서 p 태그는 보이지 않도록 */
-.letter-content p {
-  opacity: 0;
-}
+    .letter-content p {
+      opacity: 0;
+    }
 
-/* active 상태에서 각 p 태그에 애니메이션 적용 (각 p에 inline delay 적용) */
-.letter-modal.active .letter-content p {
-  animation: scroll-up 10s linear forwards;
-}
-
-@keyframes scroll-up {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-}
-
-    /* CSS: 고급스러운 플레이 버튼 스타일 */
-  .play-btn {
-    position: fixed;
-    bottom: 100px;
-    right: 20px;
-    z-index: 500;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #ff2457, #ff8a00);
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  .play-btn:hover {
-    background: linear-gradient(135deg, #ff8a00, #ff2457);
-    transform: scale(1.05);
-  }
-  .play-btn:active {
-    transform: scale(0.95);
-  }
-
-
-    /* 각 p 태그에 순차적으로 지연 효과 주기 위해 JS에서 delay를 적용할 수 있습니다 */
+    /* active 상태에서 각 p 태그에 애니메이션 적용 */
+    .letter-modal.active .letter-content p {
+      animation: scroll-up 10s linear forwards;
+    }
 
     @keyframes scroll-up {
       0% {
@@ -329,6 +286,31 @@
         transform: translateY(-100%);
         opacity: 0;
       }
+    }
+
+    /* 고급스러운 플레이 버튼 스타일 */
+    .play-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      z-index: 500;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #ff2457, #ff8a00);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .play-btn:hover {
+      background: linear-gradient(135deg, #ff8a00, #ff2457);
+      transform: scale(1.05);
+    }
+    .play-btn:active {
+      transform: scale(0.95);
     }
 
     /* 반응형 디자인 */
@@ -350,13 +332,10 @@
   <!-- 배경 음악 (자동 재생, loop) -->
   <audio id="backgroundMusic" loop autoplay>
     <source src="./audio/a.mp3" type="audio/mp3">
-    <!-- 브라우저 호환을 위해 다른 포맷도 추가할 수 있습니다 -->
   </audio>
 
- <!-- HTML: 고급스러운 플레이 버튼 -->
-<button id="playMusicButton" class="play-btn">Play Music</button>
-
-
+  <!-- 고급스러운 플레이 버튼 -->
+  <button id="playMusicButton" class="play-btn">Play Music</button>
 
   <!-- 초기 동영상 헤더 -->
   <div class="video-header" id="videoHeader">
@@ -372,8 +351,7 @@
       <h1 class="title">🎄Christmas🎄</h1>
       <p class="date">2024.12.25</p>
       <div class="category-cards">
-        <!-- Christmas 카테고리 카드 -->
-        <div class="category-card" data-category=" " data-images='["./christmas/ch2.jpg", "./christmas/ch3.jpg", "./christmas/christmas.jpg","./christmas/1.jpg","./christmas/2.jpg","./christmas/3.jpg","./christmas/4.jpg"  ]' style="background-image: url('./img/christmas.jpg');"></div>
+        <div class="category-card" data-category="Christmas" data-images='["./christmas/ch2.jpg", "./christmas/ch3.jpg", "./christmas/christmas.jpg", "./christmas/1.jpg", "./christmas/2.jpg", "./christmas/3.jpg", "./christmas/4.jpg"]' style="background-image: url('./img/christmas.jpg');"></div>
       </div>
     </section>
 
@@ -382,8 +360,7 @@
       <h1 class="title">🌅새해 데이트❤️</h1>
       <p class="date">2025.01.01</p>
       <div class="category-cards">
-        <!-- Lotte 카테고리 카드 -->
-        <div class="category-card" data-category=" " data-images='["./lotte/1.jpg", "./lotte/2.jpg", "./lotte/3.jpg", "./lotte/4.jpg","./lotte/5.jpg","./lotte/6.jpg","./lotte/7.jpg"]' style="background-image: url('./img/lotte.jpg');"></div>
+        <div class="category-card" data-category="Lotte" data-images='["./lotte/1.jpg", "./lotte/2.jpg", "./lotte/3.jpg", "./lotte/4.jpg", "./lotte/5.jpg", "./lotte/6.jpg", "./lotte/7.jpg"]' style="background-image: url('./img/lotte.jpg');"></div>
       </div>
     </section>
 
@@ -392,8 +369,7 @@
       <h1 class="title">🎂 보라미 생일❤️</h1>
       <p class="date">2025.01.08</p>
       <div class="category-cards">
-        <!-- Birthday 카테고리 카드 -->
-        <div class="category-card" data-category=" " data-images='["./birthday/1.jpg", "./birthday/2.jpg", "./birthday/3.jpg", "./birthday/4.jpg", "./birthday/5.jpg", "./birthday/6.jpg", "./birthday/7.jpg", "./birthday/8.jpg", "./birthday/9.jpg", "./birthday/10.jpg", "./birthday/11.jpg", "./birthday/12.jpg", "./birthday/13.jpg", "./birthday/14.jpg", "./birthday/15.jpg", "./birthday/16.jpg", "./birthday/17.jpg", "./birthday/18.jpg", "./birthday/19.jpg", "./birthday/20.jpg", "./birthday/21.jpg","./birthday/22.jpg","./birthday/23.jpg","./birthday/24.jpg"]' style="background-image: url('./img/birthday.jpg');"></div>
+        <div class="category-card" data-category="Birthday" data-images='["./birthday/1.jpg", "./birthday/2.jpg", "./birthday/3.jpg", "./birthday/4.jpg", "./birthday/5.jpg", "./birthday/6.jpg", "./birthday/7.jpg", "./birthday/8.jpg", "./birthday/9.jpg", "./birthday/10.jpg", "./birthday/11.jpg", "./birthday/12.jpg", "./birthday/13.jpg", "./birthday/14.jpg", "./birthday/15.jpg", "./birthday/16.jpg", "./birthday/17.jpg", "./birthday/18.jpg", "./birthday/19.jpg", "./birthday/20.jpg", "./birthday/21.jpg", "./birthday/22.jpg", "./birthday/23.jpg", "./birthday/24.jpg"]' style="background-image: url('./img/birthday.jpg');"></div>
       </div>
     </section>
 
@@ -402,8 +378,7 @@
       <h1 class="title">🌃 100일 여행 ❤️</h1>
       <p class="date">2024.01.03</p>
       <div class="category-cards">
-        <!-- Yeongjong 카테고리 카드 -->
-        <div class="category-card" data-category=" " data-images='["./travel/1.jpg", "./travel/2.jpg", "./travel/3.jpg", "./travel/4.jpg", "./travel/5.jpg", "./travel/6.jpg", "./travel/7.jpg","./travel/8.jpg","./travel/9.jpg","./travel/10.jpg","./travel/11.jpg","./travel/12.jpg","./travel/13.jpg","./travel/14.jpg"]' style="background-image: url('./img/yeongjong.jpg');"></div>
+        <div class="category-card" data-category="Travel" data-images='["./travel/1.jpg", "./travel/2.jpg", "./travel/3.jpg", "./travel/4.jpg", "./travel/5.jpg", "./travel/6.jpg", "./travel/7.jpg", "./travel/8.jpg", "./travel/9.jpg", "./travel/10.jpg", "./travel/11.jpg", "./travel/12.jpg", "./travel/13.jpg", "./travel/14.jpg"]' style="background-image: url('./img/yeongjong.jpg');"></div>
       </div>
     </section>
   </main>
@@ -414,7 +389,6 @@
       <button class="close-btn" id="closeModal">닫기</button>
       <h2 id="modalTitle" style="color: var(--text); margin-bottom: 1rem;"></h2>
       <div class="modal-grid" id="modalGrid">
-        <!-- 이미지가 동적으로 추가됩니다 -->
       </div>
     </div>
   </div>
@@ -422,45 +396,49 @@
   <!-- 편지 모달 -->
   <div class="letter-modal" id="letterModal">
     <div class="letter-content" id="letterContent">
-      <!-- 편지 내용. 각 p 태그에 delay를 추가해 한 줄씩 위로 올라가는 효과 -->
       <p style="animation-delay: 0s;">To. 보람</p>
-      <p style="animation-delay: 4s;">안녕? 편지로 인사하는 건 처음이넹^^</p>
-      <p style="animation-delay: 10s;">우리가 만난지 벌써 100일이라니!! 아직 보라미랑 같이 못해본게 정말 많은데...시간이 참 빨리 흘러가는 것 같아</p>
-      <p style="animation-delay: 15s;">우리의 지난 100일 동안을 돌이켜보면 내 성격이 많이 무심하고, 표현을 잘못해주는 것들이 많아서 보람이가 서운했던 적이 많았던 것 같아ㅜ </p>
-      <p style="animation-delay: 20s;">표현은 잘못하지만 누구보다도 보람이를 가장 아끼고 사랑한다는 사실은 꼭 알아줬으면 해..ㅎㅎ </p>
-      <p style="animation-delay: 25s;"></p>
-      <!-- 추가 문장을 필요에 따라 추가 -->
+      <p style="animation-delay: 4s;">안녕?😊 편지로 인사하는 건 처음이넹^^ 편지로 내 마음을 전달하는 건 처음이라 정말 떨려...🥲🥲</p>
+      <p style="animation-delay: 10s;">우리가 만난지 벌써 100일이나 흘렀다니!! 아직 보람이랑 같이 못해본 게 정말 많은데... 
+                                        보람이랑 즐겁게 데이트하다 보면 시간이 참 빨리 흘러가는 것 같아</p>
+      <p style="animation-delay: 15s;">우리의 지난 100일 동안을 돌이켜보면 내 성격이 많이 무심하고, 표현을 잘못해준 부분들이 많아서 
+                                         보람이가 서운했던 적이 많았던 것 같아!!😭</p>
+      <p style="animation-delay: 20s;">표현은 서툴지만, 누구보다 보람이를 아끼고 사랑한다는 사실은 꼭 알아줬으면 해 💕</p>
+      <p style="animation-delay: 25s;"> 우리가 얼마전에 다녀왔던 100일 여행 때도 보람이가 100일기념 케이크를 준비해줘서
+                                         생각지도 못한 너무 큰 감동이었어...❤️ </p>
+      <p style="animation-delay: 25s;"> 많이 바빴을텐데 예쁘고 귀여운 100일 기념 케이크를 준비해줘서 다시 한번 너무 고마워!!! </p>
+      <p style="animation-delay: 30s;"> 그리고 남자 패션에도 계속 관심 가져주고 너무 멋진 니트랑 외투를 선물해줘서
+                                     보람이가 평소에도 나를 정말 많이 생각해주는 게 느껴져져서 너무 행복하고 좋았어!!😊 </p>
+      <p style="animation-delay: 35s;"> </p>
+      <p style="animation-delay: 35s;"> 앞으로 더 행복하고 아름다운 추억을 같이 만들어보자!! </p>
+      <p style="animation-delay: 40s;"> 보람이가 주는 사랑보다 더 많이 사랑을 줄수 있는 남자친구가 될께! </p>
+      <p style="animation-delay: 40s;"> -2025.02.07 우준오빠가-</p>
+      
     </div>
     <button class="close-btn" id="closeLetterModal" style="position: absolute; top: 10px; right: 10px;">닫기</button>
   </div>
 
-  <!-- 편지 버튼 -->
+  <!-- 편지 버튼 (스크롤 시 하단에 표시) -->
   <button class="letter-button" id="letterButton">✉️</button>
 
   <script>
-
-    
     // 비디오 클릭 시 사라지는 효과
     document.getElementById('videoHeader').addEventListener('click', () => {
       document.getElementById('videoHeader').classList.add('hide');
     });
 
-    // 스크롤 애니메이션 (섹션 등장)
+    // 섹션 등장 애니메이션 (IntersectionObserver)
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting) {
+        if (entry.isIntersecting) {
           entry.target.classList.add('active');
         }
       });
     }, { threshold: 0.5 });
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-    // 초기 첫 번째 섹션 활성화
+    sections.forEach(section => observer.observe(section));
     document.querySelector('section').classList.add('active');
 
-    // 카테고리 카드 클릭 시 기존 모달 열기
+    // 카테고리 카드 클릭 시 이미지 모달 열기
     const categoryCards = document.querySelectorAll('.category-card');
     const modal = document.getElementById('imageModal');
     const modalGrid = document.getElementById('modalGrid');
@@ -471,79 +449,63 @@
       card.addEventListener('click', () => {
         const category = card.getAttribute('data-category');
         const images = JSON.parse(card.getAttribute('data-images'));
-
-        // 모달 타이틀 설정
         modalTitle.textContent = category;
-
-        // 모달 그리드 초기화
         modalGrid.innerHTML = '';
-
-        // 이미지 추가
         images.forEach(imgSrc => {
           const imgElement = document.createElement('img');
           imgElement.src = imgSrc;
           imgElement.alt = `${category} 이미지`;
           imgElement.addEventListener('click', () => {
-            // 개별 이미지 클릭 시 새 창에서 열기
             window.open(imgSrc, '_blank');
           });
           modalGrid.appendChild(imgElement);
         });
-        // 모달 표시
         modal.classList.add('active');
       });
     });
 
-    // 기존 모달 닫기
-    closeModal.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
+    closeModal.addEventListener('click', () => modal.classList.remove('active'));
     window.addEventListener('click', (e) => {
-      if (e.target == modal) {
-        modal.classList.remove('active');
+      if (e.target === modal) modal.classList.remove('active');
+    });
+
+    // 플레이 버튼 클릭 시 배경 음악 재생
+    const playMusicButton = document.getElementById('playMusicButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    playMusicButton.addEventListener('click', () => backgroundMusic.play());
+
+    // 편지 버튼과 모달 관련
+    const letterButton = document.getElementById('letterButton');
+    const letterModal = document.getElementById('letterModal');
+    const closeLetterModal = document.getElementById('closeLetterModal');
+
+    // 스크롤 이벤트: 페이지 하단 100px 이내로 내려가면 편지 버튼 표시
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      if (documentHeight - scrollPosition < 100) {
+        letterButton.style.display = 'flex';
+      } else {
+        letterButton.style.display = 'none';
       }
     });
 
-
-    // JavaScript: 플레이 버튼 클릭 시 배경 음악 재생
-    const playMusicButton = document.getElementById('playMusicButton');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-
-    playMusicButton.addEventListener('click', () => {
-      backgroundMusic.play();
+    // 편지 버튼 클릭 시 편지 모달 열고 애니메이션 재실행
+    letterButton.addEventListener('click', () => {
+      letterModal.classList.add('active');
+      const paragraphs = document.querySelectorAll('.letter-content p');
+      paragraphs.forEach((p, index) => {
+        p.style.animation = 'none';
+        void p.offsetHeight; // 강제 리플로우
+        // 각 p 태그에 순차적 delay (예: index * 4초)
+        p.style.animation = `scroll-up 10s linear forwards ${index * 4}s`;
+      });
     });
 
-
-  // 편지 버튼 클릭 시 편지 모달 열고, 애니메이션 재실행 처리 (JS)
-  const letterButton = document.getElementById('letterButton');
-  const letterModal = document.getElementById('letterModal');
-  const closeLetterModal = document.getElementById('closeLetterModal');
-
-  letterButton.addEventListener('click', () => {
-    // 모달 열기
-    letterModal.classList.add('active');
-    
-    // 강제로 애니메이션을 재실행하기 위해 각 문단의 animation 속성을 초기화 후 재적용
-    const paragraphs = document.querySelectorAll('.letter-content p');
-    paragraphs.forEach((p) => {
-      p.style.animation = 'none';
-      // 강제 리플로우: offsetHeight를 읽으면 CSS가 재계산됨
-      void p.offsetHeight;
-      p.style.animation = '';
+    closeLetterModal.addEventListener('click', () => letterModal.classList.remove('active'));
+    window.addEventListener('click', (e) => {
+      if (e.target === letterModal) letterModal.classList.remove('active');
     });
-  });
-
-  closeLetterModal.addEventListener('click', () => {
-    letterModal.classList.remove('active');
-  });
-
-  // 편지 모달 외부 클릭 시 닫기
-  window.addEventListener('click', (e) => {
-    if (e.target === letterModal) {
-      letterModal.classList.remove('active');
-    }
-  });
-
   </script>
 </body>
 </html>
