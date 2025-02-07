@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100일 간의 소중한 추억들</title>
+    <style>
+        :root {
+            --primary: #000;
+            --text: #fff;
+            --accent: #ff2457;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        /* 비디오 헤더 */
+        .video-header {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #mainVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-header.hide {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            min-height: 100vh;
+            padding: 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 공통 parallax 클래스 */
+        .parallax {
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* 개별 섹션 배경 크기 및 이미지 설정 */
+        .christmas-bg {
+            background-size: 30%; /* 원하는 크기로 조정 */
+            background-image: url('./christmas/christmas.jpg');
+        }
+
+        .lotte-bg {
+            background-size: 20%; /* 원하는 크기로 조정 */
+            background-image: url('./lotte/bg.jpg');
+        }
+
+        .birthday-bg {
+            background-size: 20%; /* 원하는 크기로 조정 */
+            background-image: url('./birthday/bg3.jpg');
+        }
+
+        .yeongjong-bg {
+            background-size: 20%; /* 원하는 크기로 조정 */
+            background-image: url('./travel/bg.jpg');
+        }
+
+        /* 텍스트 스타일 */
+        .title {
+            font-size: 5vw;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .date {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        /* 카테고리 이미지 카드 */
+        .category-cards {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            width: 250px;
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+        }
+
+        .category-card::after {
+            content: attr(data-category);
+            position: absolute;
+            bottom: 10px;
+            left: 100%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            background: #111;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .modal-grid img {
+            width: 70%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: var(--text);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 8vw;
+            }
+
+            .category-card {
+                width: 200;
+                height: 500;
+            }
+
+            .modal-grid img {
+                height: 600;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 초기 동영상 헤더 -->
+    <div class="video-header" id="videoHeader">
+        <video id="mainVideo" autoplay muted loop>
+            <source src="./video/video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <!-- Christmas 섹션 -->
+        <section id="christmas" class="parallax christmas-bg">
+            <h1 class="title">🎄Christmas🎄</h1>
+            <p class="date">2024.12.25</p>
+            <div class="category-cards">
+                <!-- Christmas 카테고리 카드 -->
+                <div class="category-card" data-category=" " data-images='["./christmas/ch2.jpg", "./christmas/ch3.jpg", "./christmas/christmas.jpg"]' style="background-image: url('./img/christmas.jpg');"></div>
+            </div>
+        </section>
+
+        <!-- Lotte 섹션 -->
+        <section id="lotte" class="parallax lotte-bg">
+            <h1 class="title">🌅새해 데이트❤️</h1>
+            <p class="date">2025.01.01</p>
+            <div class="category-cards">
+                <!-- Lotte 카테고리 카드 -->
+                <div class="category-card" data-category=" " data-images='["./lotte/1.jpg", "./lotte/2.jpg", "./lotte/3.jpg", "./lotte/4.jpg","./lotte/5.jpg","./lotte/6.jpg","./lotte/7.jpg"]' style="background-image: url('./img/lotte.jpg');"></div>
+            </div>
+        </section>
+
+        <!-- Birthday 섹션 -->
+        <section id="birthday" class="parallax birthday-bg">
+            <h1 class="title">🎂 보라미 생일❤️</h1>
+            <p class="date">2025.01.08</p>
+            <div class="category-cards">
+                <!-- Birthday 카테고리 카드 -->
+                <div class="category-card" data-category=" " data-images='["./birthday/1.jpg", "./birthday/2.jpg", "./birthday/3.jpg", "./birthday/4.jpg",  "./birthday/5.jpg",
+                                                                             "./birthday/6.jpg",  "./birthday/7.jpg",  "./birthday/8.jpg",  "./birthday/9.jpg",  "./birthday/10.jpg",
+                                                                              "./birthday/11.jpg", "./birthday/12.jpg", "./birthday/13.jpg", "./birthday/14.jpg", "./birthday/15.jpg",
+                                                                               "./birthday/16.jpg", "./birthday/17.jpg", "./birthday/18.jpg", "./birthday/19.jpg", "./birthday/20.jpg",
+                                                                               "./birthday/21.jpg","./birthday/22.jpg","./birthday/23.jpg","./birthday/24.jpg"]' style="background-image: url('./img/birthday.jpg');"></div>
+            </div>
+        </section>
+
+        <!-- Yeongjong 섹션 -->
+        <section id="yeongjong" class="parallax yeongjong-bg">
+            <h1 class="title">🌃 100일 여행 ❤️</h1>
+            <p class="date">2024.01.03</p>
+            <div class="category-cards">
+                <!-- Yeongjong 카테고리 카드 -->
+                <div class="category-card" data-category=" " data-images='["./travel/1.jpg", "./travel/2.jpg", "./travel/3.jpg", "./travel/4.jpg"
+                                                                            , "./travel/5.jpg", "./travel/6.jpg", "./travel/7.jpg","./travel/8.jpg","./travel/9.jpg","./travel/10.jpg"
+                                                                            ,"./travel/11.jpg","./travel/12.jpg","./travel/13.jpg","./travel/14.jpg"]' style="background-image: url('./img/yeongjong.jpg');"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 모달 -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModal">닫기</button>
+            <h2 id="modalTitle" style="color: var(--text); margin-bottom: 1rem;"></h2>
+            <div class="modal-grid" id="modalGrid">
+                <!-- 이미지가 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 비디오 클릭 시 사라지는 효과
+        document.getElementById('videoHeader').addEventListener('click', () => {
+            document.getElementById('videoHeader').classList.add('hide');
+        });
+
+        // 스크롤 애니메이션
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 초기 첫 번째 섹션 활성화
+        document.querySelector('section').classList.add('active');
+
+        // 카테고리 카드 클릭 시 모달 열기
+        const categoryCards = document.querySelectorAll('.category-card');
+        const modal = document.getElementById('imageModal');
+        const modalGrid = document.getElementById('modalGrid');
+        const modalTitle = document.getElementById('modalTitle');
+        const closeModal = document.getElementById('closeModal');
+
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                const images = JSON.parse(card.getAttribute('data-images'));
+
+                // 모달 타이틀 설정
+                modalTitle.textContent = category;
+
+                // 모달 그리드 초기화
+                modalGrid.innerHTML = '';
+
+                // 이미지 추가
+                images.forEach(imgSrc => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imgSrc;
+                    imgElement.alt = `${category} 이미지`;
+                    imgElement.addEventListener('click', () => {
+                        // 개별 이미지 클릭 시 새 창에서 열기
+                        window.open(imgSrc, '_blank');
+                    });
+                    modalGrid.appendChild(imgElement);
+                });
+
+                // 모달 표시
+                modal.classList.add('active');
+            });
+        });
+
+        // 모달 닫기
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // 모달 외부 클릭 시 닫기
+        window.addEventListener('click', (e) => {
+            if (e.target == modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 100일 간의 소중한 추억 </title>
+    <style>
+        :root {
+            --primary: #000;
+            --text: #fff;
+            --accent: #ff2457;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        /* 비디오 헤더 */
+        .video-header {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #mainVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-header.hide {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            min-height: 100vh;
+            padding: 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 배경 이미지 효과 */
+        .parallax {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 텍스트 스타일 */
+        .title {
+            font-size: 5vw;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .date {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        /* 이미지 카드 */
+        .image-cards {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .image-card {
+            width: 200px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: scale(1.1);
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: var(--text);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 초기 동영상 헤더 -->
+    <div class="video-header" id="videoHeader">
+        <video id="mainVideo" autoplay muted loop>
+            <source src="./video/video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <section id="christmas" class="parallax">
+            <h1 class="title">🎄Christmas🎄</h1>
+            <p class="date">2024.12.25</p>
+            <div class="image-cards">
+                <div class="image-card" style="background-image: url('./img/christmas.jpg');" data-images='["./img/christmas.jpg", "./img/eve.jpg", "./img/ch3.jpg","./img/ch2.jpg"]'></div>
+            </div>
+        </section>
+
+        <section id="lotte" class="parallax">
+            <h1 class="title">🌅새해 첫 날 데이트❤️</h1>
+            <p class="date">2025.01.01</p>
+            <div class="image-cards">
+                <div class="image-card" style="background-image: url('./img/l0.jpg');" data-images='["./img/l1.jpg", "./img/l2.jpg", "./img/l3.jpg"]'></div>
+
+            </div>
+        </section>
+
+        <section id="birthday" class="parallax">
+            <h1 class="title"> 🎂 보라미 생일❤️ </h1>
+            <p class="date">2025.01.08</p>
+            <div class="image-cards">
+                <div class="image-card" style="background-image: url('./img/l1');" data-images='["./img/l1.jpg", "https://source.unsplash.com/random/800x600/?birthday2"]'></div>
+                <div class="image-card" style="background-image: url('https://source.unsplash.com/random/200x300/?birthday2');" data-images='["https://source.unsplash.com/random/800x600/?birthday3", "https://source.unsplash.com/random/800x600/?birthday4"]'></div>
+            </div>
+        </section>
+
+
+
+        <section id="yeongjong" class="parallax">
+            <h1 class="title"> 🌃 영종도 데이트 ❤️</h1>
+            <p class="date">2024.01.03</p>
+            <div class="image-cards">
+                <div class="image-card" style="background-image: url('https://source.unsplash.com/random/200x300/?yeongjong1');" data-images='["https://source.unsplash.com/random/800x600/?yeongjong1", "https://source.unsplash.com/random/800x600/?yeongjong2"]'></div>
+                <div class="image-card" style="background-image: url('https://source.unsplash.com/random/200x300/?yeongjong2');" data-images='["https://source.unsplash.com/random/800x600/?yeongjong3", "https://source.unsplash.com/random/800x600/?yeongjong4"]'></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 모달 -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // 비디오 클릭 시 사라지는 효과
+        document.getElementById('videoHeader').addEventListener('click', () => {
+            document.getElementById('videoHeader').classList.add('hide');
+        });
+
+        // 스크롤 애니메이션
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 초기 첫 번째 섹션 활성화
+        document.querySelector('section').classList.add('active');
+
+        // 이미지 카드 클릭 이벤트
+        const imageCards = document.querySelectorAll('.image-card');
+        const modal = document.getElementById('imageModal');
+        const modalContent = modal.querySelector('.modal-content');
+        const closeModal = document.getElementById('closeModal');
+
+        imageCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const images = JSON.parse(card.getAttribute('data-images'));
+                modalContent.innerHTML = '<button class="close-btn" id="closeModal">Close</button>';
+                images.forEach(img => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = img;
+                    modalContent.appendChild(imgElement);
+                });
+                modal.classList.add('active');
+
+                // Close button functionality
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

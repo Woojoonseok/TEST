@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story</title>
+    <style>
+        :root {
+            --primary: #000;
+            --text: #fff;
+            --accent: #ff2457;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        /* 비디오 헤더 */
+        .video-header {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #mainVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-header.hide {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            height: 100vh;
+            padding: 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 배경 이미지 효과 */
+        .parallax {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 텍스트 스타일 */
+        .title {
+            font-size: 5vw;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .date {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        /* 크리스마스 섹션 */
+        #christmas {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                            url('https://source.unsplash.com/random/1920x1080/?christmas');
+        }
+
+        /* 생일 섹션 */
+        #birthday {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                            url('https://source.unsplash.com/random/1920x1080/?birthday');
+        }
+
+        /* 롯데타워 섹션 */
+        #lotte {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                            url('https://source.unsplash.com/random/1920x1080/?lotte-tower');
+        }
+
+        /* 영종도 섹션 */
+        #yeongjong {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                            url('https://source.unsplash.com/random/1920x1080/?yeongjongdo');
+        }
+    </style>
+</head>
+<body>
+    <!-- 초기 동영상 헤더 -->
+    <div class="video-header" id="videoHeader">
+        <video id="mainVideo" autoplay muted loop>
+            <source src="./video/video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <section id="christmas" class="parallax">
+            <h1 class="title">Our First Christmas</h1>
+            <p class="date">2022.12.25</p>
+        </section>
+
+        <section id="birthday" class="parallax">
+            <h1 class="title">Special Birthday</h1>
+            <p class="date">2023.05.20</p>
+        </section>
+
+        <section id="lotte" class="parallax">
+            <h1 class="title">Lotte Tower Date</h1>
+            <p class="date">2023.08.15</p>
+        </section>
+
+        <section id="yeongjong" class="parallax">
+            <h1 class="title">Yeongjong Memory</h1>
+            <p class="date">2024.01.03</p>
+        </section>
+    </main>
+
+    <script>
+        // 비디오 클릭 시 사라지는 효과
+        document.getElementById('videoHeader').addEventListener('click', () => {
+            document.getElementById('videoHeader').classList.add('hide');
+        });
+
+        // 스크롤 애니메이션
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 초기 첫 번째 섹션 활성화
+        document.querySelector('section').classList.add('active');
+    </script>
+</body>
+</html>
