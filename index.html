@@ -287,6 +287,13 @@
         opacity: 0;
       }
     }
+    /* 모바일 화면에서 애니메이션 더 빠르게 (2초) */
+@media (max-width: 768px) {
+  .letter-modal.active .letter-content p {
+    animation: scroll-up 2s linear forwards; /* 모바일에서는 2초로 더 빠르게 */
+  }
+}
+
 
     /* 고급스러운 플레이 버튼 스타일 */
     .play-btn {
